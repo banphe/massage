@@ -13,10 +13,19 @@ export const chart = (data, options = {}) => {
     data.forEach(({ x, y }) => {
         const label = el('div', 'text-right text-sm pr-2 whitespace-nowrap', x);
         label.style.border = '1px dashed orange'; // DEBUG
+        const barContainer = el('div', 'relative h-full');
         const bar = el('div', 'bg-primary rounded h-full');
         bar.style.border = '1px dashed purple'; // DEBUG
         bar.style.width = `${(y / max) * 100}%`;
-        wrapper.append(label, bar);
+        [0.25, 0.5, 0.75].forEach(fraction => {
+            const line = el('div', 'absolute top-0 h-full');
+            line.style.left = `${fraction * 100}%`;
+            line.style.width = '1px';
+            line.style.background = 'rgba(0,0,0,0.15)';
+            barContainer.appendChild(line);
+        });
+        barContainer.appendChild(bar);
+        wrapper.append(label, barContainer);
     });
 
     const ruler = el('div', 'relative h-6 mt-2');
