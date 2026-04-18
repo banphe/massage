@@ -13,6 +13,7 @@ export class ReportView {
 
     mount(initialPeriod,chartData) {
         const controls = el('div', 'flex gap-2 bg-white p-4 rounded-lg shadow-md');
+        controls.style.border = '3px solid red'; // DEBUG
         const dayBtn = Button('D', 'btn-xs');
         const monthBtn = Button('M', 'btn-xs');
         dayBtn.addEventListener('click', () => this.onPeriodChange('d'));
@@ -21,6 +22,7 @@ export class ReportView {
         const menu = ButtonGroup(dayBtn, monthBtn, initialPeriod === 'm' ? 1 : 0);
         controls.appendChild(menu);
         this.chartElement = el('div', 'flex flex-col p-0 bg-white rounded-lg shadow-md flex-1');
+        this.chartElement.style.border = '3px solid blue'; // DEBUG
         this.chartElement.appendChild(chart(chartData));
         this.element.append(controls, this.chartElement);
 
