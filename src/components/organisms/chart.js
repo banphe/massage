@@ -28,6 +28,7 @@ export const chart = (data, options = {}) => {
     ruler.style.gridColumn = '2';
     ruler.style.gridRow = `${data.length + 1}`;
     ruler.style.paddingTop = '8px';
+    ruler.style.paddingBottom = '16px';
 
     [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
         const tickMark = el('div', 'absolute');
