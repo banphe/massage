@@ -23,30 +23,29 @@ export const chart = (data, options = {}) => {
         wrapper.append(label, bar);
     });
 
-    const overlay = el('div', 'relative');
-    overlay.style.gridColumn = '2';
-    overlay.style.gridRow = '1 / -1';
-    overlay.style.alignSelf = 'stretch';
-    overlay.style.pointerEvents = 'none';
-    [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
-        const line = el('div', 'absolute top-0 h-full');
-        line.style.left = `${fraction * 100}%`;
-        line.style.width = '1px';
-        line.style.background = 'rgba(0,0,0,0.2)';
-        overlay.appendChild(line);
-    });
-    wrapper.appendChild(overlay);
-
-    const ruler = el('div', 'relative h-6 mt-2');
+    const ruler = el('div', 'relative');
     ruler.style.border = '2px dashed red'; // DEBUG
     ruler.style.gridColumn = '2';
     ruler.style.gridRow = `${data.length + 1}`;
+    ruler.style.paddingTop = '8px';
+
     [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
-        const tick = el('div', 'absolute text-xs text-gray-400 -translate-x-1/2', Math.round(max * fraction).toString());
-        tick.style.border = '1px dashed cyan'; // DEBUG
-        tick.style.left = `${fraction * 100}%`;
-        ruler.appendChild(tick);
+        const tickMark = el('div', 'absolute');
+        tickMark.style.left = `${fraction * 100}%`;
+        tickMark.style.top = '0';
+        tickMark.style.width = '1px';
+        tickMark.style.height = '8px';
+        tickMark.style.background = 'rgba(0,0,0,0.3)';
+        tickMark.style.transform = 'translateX(-50%)';
+
+        const tickLabel = el('div', 'absolute text-xs text-gray-400 -translate-x-1/2', Math.round(max * fraction).toString());
+        tickLabel.style.border = '1px dashed cyan'; // DEBUG
+        tickLabel.style.left = `${fraction * 100}%`;
+        tickLabel.style.top = '8px';
+
+        ruler.append(tickMark, tickLabel);
     });
+
     wrapper.appendChild(ruler);
 
     return wrapper;
