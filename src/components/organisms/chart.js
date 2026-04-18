@@ -29,7 +29,7 @@ export const chart = (data, options = {}) => {
     ruler.style.gridRow = `${data.length + 1}`;
     ruler.style.height = '32px';
 
-    [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
+    [0, 0.25, 0.5, 0.75, 1].forEach((fraction, idx) => {
         const tickMark = el('div', 'absolute');
         tickMark.style.left = `${fraction * 100}%`;
         tickMark.style.top = '0';
@@ -38,10 +38,12 @@ export const chart = (data, options = {}) => {
         tickMark.style.background = 'rgba(0,0,0,0.3)';
         tickMark.style.transform = 'translateX(-50%)';
 
-        const tickLabel = el('div', 'absolute text-xs text-gray-400 -translate-x-1/2', Math.round(max * fraction).toString());
+        const translate = idx === 0 ? 'translateX(0)' : idx === 4 ? 'translateX(-100%)' : 'translateX(-50%)';
+        const tickLabel = el('div', 'absolute text-xs text-gray-400', Math.round(max * fraction).toString());
         tickLabel.style.border = '1px dashed cyan'; // DEBUG
         tickLabel.style.left = `${fraction * 100}%`;
         tickLabel.style.top = '8px';
+        tickLabel.style.transform = translate;
 
         ruler.append(tickMark, tickLabel);
     });
