@@ -25,10 +25,10 @@ export const chart = (data, options = {}) => {
 
     const overlay = el('div', 'relative');
     overlay.style.gridColumn = '2';
-    overlay.style.gridRow = `1 / span ${data.length + 1}`;
+    overlay.style.gridRow = `1 / span ${data.length}`;
     overlay.style.alignSelf = 'stretch';
     overlay.style.pointerEvents = 'none';
-    [0.25, 0.5, 0.75].forEach(fraction => {
+    [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
         const line = el('div', 'absolute top-0 h-full');
         line.style.left = `${fraction * 100}%`;
         line.style.width = '1px';
