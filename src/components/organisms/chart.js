@@ -25,7 +25,7 @@ export const chart = (data, options = {}) => {
 
     const overlay = el('div', 'relative');
     overlay.style.gridColumn = '2';
-    overlay.style.gridRow = `1 / span ${data.length}`;
+    overlay.style.gridRow = '1 / -1';
     overlay.style.alignSelf = 'stretch';
     overlay.style.pointerEvents = 'none';
     [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
