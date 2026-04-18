@@ -17,14 +17,15 @@ export const chart = (data, options = {}) => {
         const bar = el('div', 'bg-primary rounded h-full');
         bar.style.border = '1px dashed purple'; // DEBUG
         bar.style.width = `${(y / max) * 100}%`;
+        barContainer.appendChild(bar);
         [0.25, 0.5, 0.75].forEach(fraction => {
             const line = el('div', 'absolute top-0 h-full');
             line.style.left = `${fraction * 100}%`;
             line.style.width = '1px';
-            line.style.background = 'rgba(0,0,0,0.15)';
+            line.style.background = 'rgba(0,0,0,0.4)';
+            line.style.zIndex = '1';
             barContainer.appendChild(line);
         });
-        barContainer.appendChild(bar);
         wrapper.append(label, barContainer);
     });
 
