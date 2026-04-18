@@ -20,6 +20,7 @@ export const chart = (data, options = {}) => {
     });
 
     const ruler = el('div', 'relative h-6 mt-2');
+    ruler.style.border = '2px dashed red'; // DEBUG
     ruler.style.gridColumn = '2';
     [0, 0.25, 0.5, 0.75, 1].forEach(fraction => {
         const tick = el('div', 'absolute text-xs text-gray-400 -translate-x-1/2', Math.round(max * fraction).toString());
