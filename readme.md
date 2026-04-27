@@ -2,7 +2,7 @@
 
 System CRM do zarządzania salonem masażu — klienci, rezerwacje i kalendarz w jednym miejscu.
 jest to rekonstrukcja aplikacji "thairapy front"
-Po rekonstrukcji warto wyrzucić starą aplikację aby był porządek.
+Po rekonstrukcji warto wyrzucić starą aplikację aby był porządek
 
 ## Technologie
 
