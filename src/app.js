@@ -7,6 +7,8 @@ import { ReportPresenter } from './presenters/reportPresenter.js';
 import { NavLink } from './components/atoms/NavLink.js';
 import { CalendarAdapter } from './models/CalendarAdapter.js';
 import { CalendarService } from './models/calendarService.js';
+import { ReportAdapter } from './models/ReportAdapter.js';
+import { ReportService } from './models/reportService.js';
 
 document.body.classList.add('h-dvh', 'flex', 'flex-col', 'overflow-hidden', 'bg-gray-100');
 
@@ -25,10 +27,12 @@ window.location.hash ||= '#/calendar';
 const bottomNavBar = BottomNav([calLnk, chatLnk]);
 document.body.append(bottomNavBar);
 
-const adapter  = new CalendarAdapter();
-const calendarService = new CalendarService(adapter);
-const data = await calendarService.loadData();
-new CalendarPresenter(calV, data.resources, data.events);
-new ReportPresenter(chatV);
+const calAdapter = new CalendarAdapter();
+const calendarService = new CalendarService(calAdapter);
+const calData = await calendarService.loadData();
+new CalendarPresenter(calV, calData.resources, calData.events);
 
-
+const reportAdapter = new ReportAdapter();
+const reportService = new ReportService(reportAdapter);
+const reportPresenter = new ReportPresenter(chatV, reportService);
+await reportPresenter.init();
