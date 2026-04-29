@@ -1,6 +1,7 @@
 import { el } from '../utils/dom.js';
 import { ButtonGroup } from '../components/molecules/ButtonGroup.js';
 import { Button } from '../components/atoms/Button.js';
+import { MonthSelect } from '../components/atoms/MonthSelect.js';
 import { chart } from '../components/organisms/chart.js';
 export class ReportView {
     constructor(container) {
@@ -11,19 +12,42 @@ export class ReportView {
         this.lastOptions = null;
     }
 
-    mount(initialPeriod,chartData) {
-        const controls = el('div', 'flex gap-2 bg-white p-4 rounded-lg shadow-md');
+    mount(initialPeriod, chartData) {
+        const controls = el('div', 'flex gap-2 items-center bg-white p-4 rounded-lg shadow-md');
+
         const dayBtn = Button('D', 'btn-xs');
         const monthBtn = Button('M', 'btn-xs');
-        dayBtn.addEventListener('click', () => this.onPeriodChange('d'));
-        monthBtn.addEventListener('click', () => this.onPeriodChange('m'));
-        
-        const menu = ButtonGroup(dayBtn, monthBtn, initialPeriod === 'm' ? 1 : 0);
-        controls.appendChild(menu);
+        const periodGroup = ButtonGroup(dayBtn, monthBtn, initialPeriod === 'm' ? 1 : 0);
+
+        const monthSelect = MonthSelect();
+        monthSelect.style.display = initialPeriod === 'd' ? '' : 'none';
+
+        const METRICS = [
+            { icon: 'fa-coins' },
+            { icon: 'fa-clock' },
+            { icon: 'fa-hourglass-half' },
+            { icon: 'fa-chart-line' },
+        ];
+        const metricBtns = METRICS.map(({ icon }) => {
+            const btn = el('button', 'btn btn-sm join-item');
+            btn.appendChild(el('i', `fa-solid ${icon}`));
+            return btn;
+        });
+        const metricGroup = ButtonGroup(...metricBtns, 0);
+
+        dayBtn.addEventListener('click', () => {
+            monthSelect.style.display = '';
+            this.onPeriodChange?.('d');
+        });
+        monthBtn.addEventListener('click', () => {
+            monthSelect.style.display = 'none';
+            this.onPeriodChange?.('m');
+        });
+
+        controls.append(periodGroup, monthSelect, metricGroup);
         this.chartElement = el('div', 'flex flex-col p-0 bg-white rounded-lg shadow-md flex-1');
         this.chartElement.appendChild(chart(chartData));
         this.element.append(controls, this.chartElement);
-
     }
 
     show() {
