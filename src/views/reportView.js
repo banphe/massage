@@ -8,7 +8,7 @@ import { METRICS } from '../config/reportConfig.js';
 
 export class ReportView {
     constructor(container) {
-        this.element = el('div', 'flex flex-col flex-1 w-full p-0 gap-2');
+        this.element = el('div', 'flex flex-col flex-1 min-h-0 w-full p-0 gap-2');
         container.appendChild(this.element);
         this.onPeriodChange = null;
         this.onMetricChange = null;
@@ -18,7 +18,7 @@ export class ReportView {
     }
 
     mount(initialPeriod, chartData) {
-        const controls = el('div', 'flex gap-2 items-center bg-white p-4 rounded-lg shadow-md');
+        const controls = el('div', 'flex gap-2 items-center bg-white p-2 rounded-lg shadow-md');
 
         const dayBtn = Button('D', 'btn-xs');
         const monthBtn = Button('M', 'btn-xs');
@@ -39,7 +39,7 @@ export class ReportView {
         monthBtn.addEventListener('click', () => { this.monthSelect.style.display = 'none'; this.onPeriodChange?.('m'); });
 
         controls.append(periodGroup, this.monthSelect, metricGroup);
-        this.chartElement = el('div', 'flex flex-col p-0 bg-white rounded-lg shadow-md flex-1');
+        this.chartElement = el('div', 'flex flex-col p-0 bg-white rounded-lg shadow-md flex-1 min-h-0');
         this.chartElement.appendChild(chart(chartData));
         this.element.append(controls, this.chartElement);
     }

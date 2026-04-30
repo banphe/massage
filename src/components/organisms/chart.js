@@ -1,14 +1,14 @@
 import { el } from '../../utils/dom.js';
 export const chart = (data, options = {}) => {
-    const { gap = 'gap-y-4', padding = 'p-4' } = options;
+    const { gap = 'gap-y-1', padding = 'px-4 pt-4 pb-0' } = options;
     const max = Math.max(...data.map(({ y }) => y));
     const wrapper = el('div', `grid w-full h-full ${gap} ${padding}`);
     wrapper.style.gridTemplateColumns = 'auto 1fr';
-    wrapper.style.gridTemplateRows = `${data.map(() => '1fr').join(' ')} auto`;
+    wrapper.style.gridTemplateRows = `${data.map(() => 'minmax(0, 1fr)').join(' ')} auto`;
     wrapper.style.alignItems = 'center';
 
     data.forEach(({ x, y }, i) => {
-        const label = el('div', 'text-right text-sm pr-2 whitespace-nowrap', x);
+        const label = el('div', 'text-right text-xs pr-2 whitespace-nowrap', x);
         label.style.gridColumn = '1';
         label.style.gridRow = `${i + 1}`;
 
